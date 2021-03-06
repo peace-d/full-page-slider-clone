@@ -1,0 +1,30 @@
+body {
+    background-color: #fff;
+    position: relative;
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    background: linear-gradient(to bottom, rgba(255, 0, 100, 0.3), rgba(22, 22, 222, 0.9));
+}
+
+.ball {
+    position:absolute;
+    display: inline-block;
+    background-color: #fff;
+    width: 100px;
+    height: 100px;
+    bottom: 0;
+    border-radius: 50%;
+    animation: bounce alternate 1s infinite;
+}
+
+@keyframes bounce {
+    0% {
+        // transform: translate(100%, 10%);
+        width: 200px;
+        height: 200px;
+    }
+    100% {
+        // transform: translate(1000%, 0%);
+    }
+}

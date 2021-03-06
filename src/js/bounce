@@ -1,0 +1,59 @@
+console.log('start');
+
+var dragged;
+const ball = document.querySelector('.ball');
+var gameSettings = {
+    ballLeftPost: 0,
+    ballBottomPost: 0,
+    windowHeight: window.innerHeight,
+    windowWidth: window.innerWidth,
+};
+
+function init() {
+    ball.style.left = gameSettings.ballLeftPost;
+    ball.style.bottom = gameSettings.ballBottomPost;
+};
+
+document.addEventListener('keydown', (event) => {
+    
+    // console.log(ball.offsetTop);
+    // console.log(ball.offsetLeft);
+
+    switch (event.code) {
+        case 'KeyD':
+            console.log(ball.offsetLeft);
+            gameSettings.ballLeftPost += 10;
+            if (ball.offsetLeft >= (gameSettings.windowWidth - 200 )) {
+                alert('window scroll please');
+                window.scroll({
+                    left: 10,
+                    behavior: 'smooth'
+                });
+            }
+            window.scroll({
+                top: 100,
+                left: 100,
+                behavior: 'smooth'
+                });
+            ball.style.left = gameSettings.ballLeftPost + 'px';
+            break;
+        case 'KeyA':
+            console.log(ball.offsetTop);
+            if (ball.offsetTop === 0) return;
+            gameSettings.ballLeftPost -= 10;
+            ball.style.left = gameSettings.ballLeftPost + 'px';
+            break;
+        case 'KeyW':
+            console.log(ball.offsetTop);
+            if (ball.offsetTop <= 10) return;
+            gameSettings.ballBottomPost += 10;
+            ball.style.bottom = gameSettings.ballBottomPost + 'px';
+            break;
+        case 'KeyS':
+            if (ball.offsetTop === 0) return;
+            gameSettings.ballBottomPost -= 10;
+            ball.style.bottom = gameSettings.ballBottomPost + 'px';
+            break;
+    };
+
+});
