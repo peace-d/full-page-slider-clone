@@ -1,73 +1,227 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Fullscreen Slider Example</title>
     <link href="https://fonts.googleapis.com/css?family=Muli:300,400,700,900" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" integrity="sha512-HK5fgLBL+xu6dm/Ii3z4xhlSUyZgTT9tuc/hSrtw6uzJOvgRr2a9jyxxT1ely+B+xFAmJKVSTbpM/CuL7qxO8w==" crossorigin="anonymous" />
     <link rel="stylesheet" href="./css/styles.css">
 </head>
 
 <body>
-    <div id="hero-slider">
-        <div id="logo" class="mask">
-            <span class="logo-text masked">Martin Rohde</span>
+<header class="header">
+
+    <nav class="nav nav--white" role="navigation">
+        <a class="nav__logo desktop" href="https://antoni.de">
+            <svg class="logo-small logo-small-dims" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                 width="300px" height="66px" viewBox="0 0 300 66" style="enable-background:new 0 0 300 66;" xml:space="preserve">
+                <style type="text/css">
+                    .st0{fill:#FFFFFF;}
+                </style>
+                <g>
+                    <path class="st0" d="M42.4,5.9L16.4,64.9h-5.3L39.7,1.2h5.4l28.6,63.7h-5.3L42.4,5.9z"/>
+                    <path class="st0" d="M148.4,1.2v59h35.8v4.6h-40.7V1.2H148.4z"/>
+                    <g>
+                        <polygon class="st0" points="198.3,60.1 198.3,5.9 237.4,5.9 237.4,1.2 193.5,1.2 193.5,64.9 238.5,64.9 238.5,60.1"/>
+                        <rect x="205.9" y="30.6" class="st0" width="29.7" height="4.5"/>
+                    </g>
+                    <rect x="248.2" y="1.3" class="st0" width="50.9" height="4.4"/>
+                    <rect x="271.2" y="13.3" class="st0" width="4.9" height="52.4"/>
+                    <g>
+                        <polygon class="st0" points="29.5,1.2 0.9,64.9 6.2,64.9 34.2,1.2"/>
+                    </g>
+                    <path class="st0" d="M105.8,31.6v4.3H128v17.8c-5.5,5-12.6,7.4-19.4,7.4c-18.6,0-28.1-12.9-28.1-27.9c-0.1-14.7,9.5-28.4,28.1-28.4
+                        c7.2,0,14.9,2.7,20.5,8.2l2.8-3.1c-6.5-6.4-14.9-9.6-23.3-9.6c-19.4,0-32.9,13-32.8,32.9c0,17.4,11.2,32.5,32.8,32.5
+                        c9.5,0,17.4-3.6,24-10.3V31.6H105.8z"/>
+                </g>
+                Aglet
+            </svg>
+        </a>
+
+        <div class="nav__list">
+            <a href="#" class="menu tablet closer hidden"><i class="fa fa-times" aria-hidden="true"></i></a>
+
+            <ul>
+                <li class="nav__item">
+                    <a href="index.html" class="link nav__cases nav__case">Home</a>
+                </li>
+                <li class="nav__item">
+                    <a href="contact.html" class="link nav__cases nav__case">Contact</a>
+                </li>
+            </ul>
+            <footer class="footer hidden tablet">
+                <div class="container f">
+                    <span class="left">
+                        All rights reserved - <a href="https://antoni.de/impressum/">Impressum / Datenschutz</a>
+                    </span>
+                    <span class="right">
+				    Join us on <a href="https://www.facebook.com/antonigmbh/" target="_blank">Facebook</a> and <a href="https://vimeo.com/user66718881" target="_blank">Vimeo</a>.
+                    </span>
+                </div>
+            </footer>
         </div>
-        <div id="slideshow">
-            <div id="slides-main" class="slides">
-                <div class="slide" data-index="0">
-                    <div class="abs-mask">
-                        <div class="slide-image" style="background-image: url(./img/ice-cream-5928048_640.jpg)"></div>
-                    </div>
-                </div>
-                <div class="slide" data-index="1">
-                    <div class="abs-mask">
-                        <div class="slide-image" style="background-image: url(./img/ice-cream-1274894_640.jpg)"></div>
-                    </div>
-                </div>
-                <div class="slide" data-index="2">
-                    <div class="abs-mask">
-                        <div class="slide-image" style="background-image: url(./img/ice-cream-5928048_640.jpg"></div>
-                    </div>
-                </div>
-                <div class="slide" data-index="3">
-                    <div class="abs-mask">
-                        <div class="slide-image" style="background-image: url(./img/ice-cream-1274894_640.jpg)"></div>
-                    </div>
-                </div>
+        <a href="#" class="menu table opener"><i class="fa fa-bars" aria-hidden="true"></i></a>
+<!--        <span class="tablet"><svg class="burger burger-dims"><use xlink:href="#burger"></use></svg></span>-->
+    </nav>
+
+</header>
+<section id="container" role="main">
+    <div id="cases" class="cases">
+
+        <h1 class="hidden">cases</h1>
+
+        <div class="container nav-white">
+
+            <div class="slideshow f">
+                <ul class="slideshow__list">
+                    <li class="slideshow__item" data-href="./single-view.html">
+                        <video class="media" poster="img/thumbnail/download.jpg" muted preload="none" loop draggable="false">
+                            <source src="video/1_Grow_up_Stage_Modul_video.mp4" type="video/mp4">
+                        </video>
+                        <div class="content">
+                            <a href="#">
+                                <h2 class="h2">Grow up</h2>
+                            </a>
+                            <h3 class="p">Stories of a new generation</h3>
+                        </div>
+                    </li>
+                    <li class="slideshow__item" data-href="#">
+                        <video class="media" poster="img/thumbnail/download-9.jpg" muted preload="none" loop draggable="false">
+                            <source src="video/bmw_stage_3.mp4" type="video/mp4">
+                        </video>
+                        <div class="content">
+                            <a href="#">
+                                <h2 class="h2">BMW</h2>
+                            </a>
+                            <h3 class="p">Next level technology</h3>
+                        </div>
+                    </li>
+                    <li class="slideshow__item" data-href="#">
+                        <video class="media" poster="img/thumbnail/download-3.jpg" muted preload="none" loop draggable="false">
+                            <source src="video/EasyRider_8Sec_L.mp4" type="video/mp4">
+                        </video>
+                        <div class="content">
+                            <a href="#">
+                                <h2 class="h2">Easy Driver</h2>
+                            </a>
+                            <h3 class="p">The new C-Class cabriolet</h3>
+                        </div>
+                    </li>
+                    <li class="slideshow__item" data-href="#">
+                        <video class="media" poster="img/thumbnail/download-5.jpg" muted preload="none" loop draggable="false">
+                            <source src="video/eq_stage_video.mp4" type="video/mp4">
+                        </video>
+                        <div class="content">
+                            <a href=#">
+                                <h2 class="h2">Flip the switch</h2>
+                            </a>
+                            <h3 class="p">Electric Intelligence by Mercedes</h3>
+                        </div>
+                    </li>
+                    <li class="slideshow__item" data-href="#">
+                        <video class="media" poster="img/thumbnail/download-8.jpg" muted preload="none" loop draggable="false">
+                            <source src="video/F1_stage-1.mp4" type="video/mp4">
+                        </video>
+                        <div class="content">
+                            <a href="#">
+                                <h2 class="h2">Alicia Keys <br>x Mercedes &#8220;Pieces&#8221;</h2>
+                            </a>
+                            <h3 class="p">Mercedes-Benzs</h3>
+                        </div>
+                    </li>
+                    <li class="slideshow__item" data-href="#">
+                        <video class="media" poster="img/thumbnail/download-1.jpg" muted preload="none" loop draggable="false">
+                            <source src="video/IAA_Makingof_8Sec_L.mp4" type="video/mp4">
+                        </video>
+                        <div class="content">
+                            <a href="#">
+                                <h2 class="h2">Luxury <br>in motion</h2>
+                            </a>
+                            <h3 class="p">The FO15 concept car</h3>
+                        </div>
+                    </li>
+                    <li class="slideshow__item" data-href="#">
+                        <video class="media" poster="img/thumbnail/download-4.jpg" muted preload="none" loop draggable="false">
+                            <source src="video/katjes_stage-1.mp4" type="video/mp4">
+                        </video>
+                        <div class="content">
+                            <a href="#">
+                                <h2 class="h2">Jes! All veggie</h2>
+                            </a>
+                            <h3 class="p">Our first ever sweets campaign</h3>
+                        </div>
+                    </li>
+                    <li class="slideshow__item" data-href="#">
+                        <video class="media" poster="img/thumbnail/download-6.jpg" muted preload="none" loop draggable="false">
+                            <source src="video/Mercedes_Leon_stage.mp4" type="video/mp4">
+                        </video>
+                        <div class="content">
+                            <a href="https://antoni.de/case/alicia-keys-x-mercedes-pieces/">
+                                <h2 class="h2">Alicia Keys <br>x Mercedes &#8220;Pieces&#8221;</h2>
+                            </a>
+                            <h3 class="p">Mercedes-Benzs</h3>
+                        </div>
+                    </li>
+                    <li class="slideshow__item" data-href="#">
+                        <video class="media" poster="img/thumbnail/download-5.jpg" muted preload="none" loop draggable="false">
+                            <source src="video/risk_1.mp4" type="video/mp4">
+                        </video>
+                        <div class="content">
+                            <a href="#">
+                                <h2 class="h2">Alicia Keys <br>x Mercedes &#8220;Pieces&#8221;</h2>
+                            </a>
+                            <h3 class="p">Mercedes-Benzs</h3>
+                        </div>
+                    </li>
+                    <li class="slideshow__item" data-href="#">
+                        <video class="media" poster="img/thumbnail/download-11.jpg" muted preload="none" loop draggable="false">
+                            <source src="video/stage_g_class_dna.mp4" type="video/mp4">
+                        </video>
+                        <div class="content">
+                            <a href="#">
+                                <h2 class="h2">Stronger than time</h2>
+                            </a>
+                            <h3 class="p">The new G-Class</h3>
+                        </div>
+                    </li>
+                    <li class="slideshow__item" data-href="#">
+                        <video class="media" poster="img/thumbnail/download-7.jpg" muted preload="none" loop draggable="false">
+                            <source src="video/stage_xmas.mp4" type="video/mp4">
+                        </video>
+                        <div class="content">
+                            <a href="#">
+                                <h2 class="h2">Alicia Keys <br>x Mercedes &#8220;Pieces&#8221;</h2>
+                            </a>
+                            <h3 class="p">Mercedes-Benzs</h3>
+                        </div>
+                    </li>
+                    <li class="slideshow__item" data-href="#">
+                        <video class="media" poster="img/thumbnail/download-2.jpg" muted preload="none" loop draggable="false">
+                            <source src="video/TimeToLookUpAgain_8Sec_L.mp4" type="video/mp4">
+                        </video>
+                        <div class="content">
+                            <a href="#">
+                                <h2 class="h2">Unleash <br>your senses</h2>
+                            </a>
+                            <h3 class="p">The new C-Class cabriolet</h3>
+                        </div>
+                    </li>
+                </ul>
             </div>
-            <div id="slides-aux" class="slides mask">
-                <h2 class="slide-title slide" data-index="0"><a href="#">#64 Paradigm</a></h2>
-                <h2 class="slide-title slide" data-index="1"><a href="#">Industrial Works</a></h2>
-                <h2 class="slide-title slide" data-index="2"><a href="#">Future Lights</a></h2>
-                <h2 class="slide-title slide" data-index="3"><a href="#">The Colossal</a></h2>
-            </div>
+
+            <nav class="cases__nav">
+                <i class="cases__nav__thumb" style="width: 50px;"></i>
+            </nav>
+
         </div>
-        <div id="info">
-            <div class="slider-title-wrapper">
-                <span class="line"></span>
-                <h1 class="slider-title">
-                    <span>Projects</span>
-                </h1>
-            </div>
-            <div class="about">
-                <p>
-                    A pure CSS/JS slider layout<br/>
-                    Developed for Toptal engineering blog<br/>
-                    by <a href="http://stefan.lynxdev.io" target="_blank">Stefan V</a>,
-                    repo on <a href="https://github.com/vitass/pure-css-js-slider" target="_blank">Github</a>
-                </p>
-            </div>
-        </div>
-        <nav id="slider-nav">
-            <span class="current">01</span>
-            <span class="sep"></span>
-            <span class="total">04</span>
-        </nav>
+
+        <span class="main-overlay"></span>
     </div>
-    <script src="./js/all.js"></script>
+</section>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="./js/all.js"></script>
 </body>
 
 </html>

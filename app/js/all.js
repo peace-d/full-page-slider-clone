@@ -1,251 +1,140 @@
-/**
- *  Utility functions
- */
-function utils() {
-    /**
-     * Returns max height value for a nodelist
-     * @param {NodeList} nodeList The node list to calculate max height of
-     */
-    const calcMaxHeight = function (items) {
-        let maxHeight = 0;
+let isPlaying = false;
+const slideShowList = document.querySelector('.slideshow__list');
 
-        items.forEach(item => {
-            const h = item.clientHeight;
-            maxHeight = h > maxHeight ? h : maxHeight;
-        });
-        return maxHeight;
-    }
+slideShowList.addEventListener('mouseover', (event) => {
+	if (event.target.nodeName === 'VIDEO') {
+		var playPromise = event.target.play();
+		if (playPromise !== undefined) {
+			playPromise.then(_ => {
+				isPlaying = true;
+			})
+			.catch(error => {
+				console.log(error);
+			});
+		}
+	}
+});
 
-    /**
-     * Removes Classes from NodeList
-     * @param {NodeList} nodeList The node list to remove classes from
-     * @param {Array} cssClasses Array of CSS classes to be removed
-     */
-    function removeClasses(nodeList, cssClasses) {
-        for (let i = 0; i < nodeList.length; i++) {
-            nodeList[i].classList.remove(...cssClasses);
-        }
-    }
+slideShowList.addEventListener('mouseout', (event) => {
+	if (event.target.nodeName === 'VIDEO') {
+		event.target.load();
+	}
+});
 
-    /**
-     * Adds Classes from NodeList
-     * @param {NodeList} nodeList The node list to add classes to
-     * @param {Array} cssClasses Array of CSS classes to be added
-     */
-    function addClasses(nodeList, cssClasses) {
-        for (let i = 0; i < nodeList.length; i++) {
-            nodeList[i].classList.add(...cssClasses);
-        }
-    }
+$('.slideshow__item').click( function(event) {
+	// console.log(event);
+	// console.log($(this).data('href'));
+	let url = $(this).data('href');
+	if (url) {
+		// fetch(url)
+		// 	.then((res) => {
+		// 		// console.log(res);
+		// 	})
+		// 	.catch((err) => {
+		// 		// console.warn(err);
+		// 	});
+	}
+});
 
-    /**
-     * Behaves the same as setInterval except uses requestAnimationFrame() where possible for better performance
-     * @param {function} fn The callback function
-     * @param {int} delay The delay in milliseconds
-     */
-    const requestInterval = function (fn, delay) {
-        const requestAnimFrame = (function () {
-            return window.requestAnimationFrame || function (callback, element) {
-                window.setTimeout(callback, 1000 / 60);
-            };
-        })();
+var sliderPos = 0;
+var startClientX = 0;
+var endPos;
+var endNavPos;
+var isGrabbing = false;
+$('.cases').mousedown(function (event) {
+	startClientX = event.clientX;
+	// console.log(startClientX);
+	isGrabbing = true;
+}).mousemove( function (event) {
+	if (isGrabbing) {
+		// console.log('move stuff please', event.clientX);
+		endPos = (sliderPos + (event.clientX - (startClientX)));
+		$('.slideshow__list').css({
+			'transform' : 'translateX(' + endPos + 'px)'
+		});
 
-        let start = new Date().getTime(),
-            handle = {};
+		endNavPos = -(endPos/16);
+		$('.cases__nav__thumb').css({
+			'transform' : 'translateX(' + endNavPos + 'px)'
+		});
 
-        function loop() {
-            const current = new Date().getTime(),
-                delta = current - start;
 
-            if (delta >= delay) {
-                fn.call();
-                start = new Date().getTime();
-            }
+		resetSliderPost();
+	}
+}).mouseup( function () {
+	isGrabbing = false;
+	sliderPos = endPos;
+	resetSliderPost();
+});
 
-            handle.value = requestAnimFrame(loop);
-        }
+$('.cases').mouseleave( function() {
+	resetSliderPost();
+	isGrabbing = false;
+});
 
-        handle.value = requestAnimFrame(loop);
-        return handle;
-    };
+function resetSliderPost() {
+	if (sliderPos > 0 ) {
+		sliderPos = 0;
+		$('.slideshow__list').css({
+			'transform' : 'translateX(0px)'
+		});
 
-    /**
-     * Behaves the same as clearInterval except uses cancelRequestAnimationFrame() where possible for better performance
-     * @param {int|object} handle The callback function
-     */
-    const clearRequestInterval = function (handle) {
-        window.cancelAnimationFrame ? window.cancelAnimationFrame(handle.value) :
-            clearInterval(handle);
-    };
+		return;
+	}
 
-    return {
-        calcMaxHeight,
-        removeClasses,
-        addClasses,
-        requestInterval,
-        clearRequestInterval
-    }
+	if (sliderPos < -6000) {
+		sliderPos = -6000;
+		$('.slideshow__list').css({
+			'transform' : 'translateX(-6000px)'
+		});
+
+		return;
+	}
+	if (endNavPos >= 357) {
+		endNavPos = 357;
+		$('.cases__nav__thumb').css({
+			'transform' : 'translateX(357px)'
+		});
+
+		return;
+	}
 }
 
 
-/**
- *  Main Slider function
- */
-function heroSlider() {
-    const slider = {
-        hero: document.querySelector('#hero-slider'),
-        main: document.querySelector('#slides-main'),
-        aux: document.querySelector('#slides-aux'),
-        current: document.querySelector('#slider-nav .current'),
-        handle: null,
-        idle: true,
-        activeIndex: -1,
-        interval: 3500
-    };
+$('.closer').click(function () {
+	$('.nav__list').removeClass('open-drawer');
+});
+$('.opener').click(function () {
+	$('.nav__list').addClass('open-drawer');
+});
 
-    const setHeight = function (holder, items) {
-        const h = utils().calcMaxHeight(items);
-        holder.style.height = `${h}px`;
-    }
 
-    const leadingZero = function () {
-        return arguments[1] < 10 ? '0' + arguments[1] : arguments[1];
-    }
+var startNavClientX;
+var endNavPos;
+var navPos = 0;
+$('.cases__nav__thumb').mousedown(function(event) {
+	$('.cases__nav__thumb').css({
+		'cursor' : 'pointer'
+	});
+	isGrabbing = true
 
-    const setCurrent = function () {
-        slider.current.innerText = leadingZero `${slider.activeIndex + 1}`;
-    }
+	startNavClientX = event.clientX;
+	console.log(event.clientX);
+}).mousemove( function (event) {
+	if (isGrabbing) {
+		// console.log('move stuff please', event.clientX);
+		endNavPos = (navPos + (event.clientX - (startNavClientX)));
+		$('.cases__nav__thumb').css({
+			'transform' : 'translateX(' + endPos + 'px)'
+		});
+	}
+});
 
-    const changeSlide = function (direction) {
-        slider.idle = false;
-        slider.hero.classList.remove('prev', 'next');
-        if (direction == 'next') {
-            slider.activeIndex = (slider.activeIndex + 1) % slider.total;
-            slider.hero.classList.add('next');
-        } else {
-            slider.activeIndex = (slider.activeIndex - 1 + slider.total) % slider.total;
-            slider.hero.classList.add('prev');
-        }
+$('.cases__nav__thumb').mouseleave( function() {
+	resetSliderPost();
+	isGrabbing = false;
+});
 
-        //reset classes
-        utils().removeClasses(slider.items, ['prev', 'active']);
-
-        //set prev  
-        const prevItems = [...slider.items]
-            .filter(item => {
-                let prevIndex;
-                if (slider.hero.classList.contains('prev')) {
-                    prevIndex = slider.activeIndex == slider.total - 1 ? 0 : slider.activeIndex + 1;
-                } else {
-                    prevIndex = slider.activeIndex == 0 ? slider.total - 1 : slider.activeIndex - 1;
-                }
-
-                return item.dataset.index == prevIndex;
-            });
-
-        //set active
-        const activeItems = [...slider.items]
-            .filter(item => {
-                return item.dataset.index == slider.activeIndex;
-            });
-
-        utils().addClasses(prevItems, ['prev']);
-        utils().addClasses(activeItems, ['active']);
-        setCurrent();
-
-        const activeImageItem = slider.main.querySelector('.active');
-        activeImageItem.addEventListener('transitionend', waitForIdle, {
-            once: true
-        });
-    }
-
-    const stopAutoplay = function () {
-        slider.autoplay = false;
-        utils().clearRequestInterval(slider.handle);
-    }
-
-    const waitForIdle = function () {
-        !slider.autoplay && autoplay(false); //restart
-        slider.idle = true;
-    }
-
-    const wheelControl = function () {
-        slider.hero.addEventListener('wheel', e => {
-            if (slider.idle) {
-                const direction = e.deltaY > 0 ? 'next' : 'prev';
-                stopAutoplay();
-                changeSlide(direction);
-            }
-        });
-    }
-
-    const autoplay = function (initial) {
-        slider.autoplay = true;
-        slider.items = slider.hero.querySelectorAll('[data-index]');
-        slider.total = slider.items.length / 2;
-
-        const loop = () => changeSlide('next');
-
-        initial && requestAnimationFrame(loop);
-        slider.handle = utils().requestInterval(loop, slider.interval);
-    }
-
-    const loaded = function () {
-        slider.hero.classList.add('loaded');
-    }
-
-    const touchControl = function () {
-        const touchStart = function (e) {
-            slider.ts = parseInt(e.changedTouches[0].clientX);
-            window.scrollTop = 0;
-        }
-
-        const touchMove = function (e) {
-            slider.tm = parseInt(e.changedTouches[0].clientX);
-            const delta = slider.tm - slider.ts;
-            window.scrollTop = 0;
-
-            if (slider.idle) {
-                const direction = delta < 0 ? 'next' : 'prev';
-                stopAutoplay();
-                changeSlide(direction);
-            }
-        }
-
-        slider.hero.addEventListener('touchstart', touchStart);
-        slider.hero.addEventListener('touchmove', touchMove);
-    }
-
-    const start = function () {
-        autoplay(true);
-        wheelControl();
-        window.innerWidth <= 1024 && touchControl();
-        slider.aux.addEventListener('transitionend', loaded, {
-            once: true
-        });
-    }
-
-    const loadingAnimation = function () {
-        slider.hero.classList.add('ready');
-        slider.current.addEventListener('transitionend', start, {
-            once: true
-        });
-    }
-
-    const init = function () {
-        setHeight(slider.aux, slider.aux.querySelectorAll('.slide-title'));
-        loadingAnimation();
-    }
-
-    const resize = function () {
-        setHeight(slider.aux, slider.aux.querySelectorAll('.slide-title'));
-    }
-
-    return {
-        init,
-        resize
-    }
-}
-
-window.addEventListener('load', heroSlider().init);
-window.addEventListener("resize", heroSlider().resize);
+// $(window).mousewheel( function (event) {
+// 	console.log(event)
+// });
